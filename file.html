@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What If India Never Partitioned</title>
+<meta name="description" content="An alternate history simulation exploring how the Indian subcontinent might have evolved without partition.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<style>
+  .projection-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:16px;
+margin-top:20px;
+}
+
+.projection-card{
+padding:22px;
+border-radius:18px;
+background:rgba(255,255,255,0.05);
+border:1px solid var(--border);
+transition:0.3s;
+}
+l̥ō
+.projection-card:hover{
+transform:scale(1.05);
+}
+  .terminal{
+background:#02060c;
+border-radius:14px;
+padding:20px;
+border:1px solid rgba(63,184,255,0.4);
+font-family:monospace;
+color:#6fffc9;
+box-shadow:0 0 30px rgba(63,184,255,0.2);
+}
+
+.terminal-title{
+color:#3fb8ff;
+font-weight:bold;
+display:block;
+margin-bottom:10px;
+}
+  .dashboard-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:16px;
+margin-top:20px;
+}
+
+.dash-card{
+padding:22px;
+border-radius:16px;
+border:1px solid var(--border);
+background:linear-gradient(140deg, rgba(63,184,255,0.18), rgba(44,229,184,0.08));
+font-weight:700;
+transition:0.3s;
+}
+
+.dash-card:hover{
+transform:translateY(-6px);
+box-shadow:0 20px 40px rgba(0,0,0,0.35);
+}
+  /* ===== PROFESSIONAL LOADER ===== */
+
+#loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  flex-direction: column;
+  animation: fadeOut 1s ease 3s forwards;
+}
+
+.loader-content h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.loader-bar {
+  width: 200px;
+  height: 4px;
+  background: linear-gradient(90deg,var(--primary),var(--accent));
+  animation: loadingBar 2.5s ease forwards;
+}
+
+@keyframes loadingBar {
+  from { width: 0; }
+  to { width: 200px; }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+  #bg3d {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+}
+
+main, nav, .cursor-glow, #login-overlay {
+  position: relative;
+  z-index: 2;
+}
+:root {
+  --bg: #071220;
+  --bg-2: #0f223a;
+  --surface: rgba(255, 255, 255, 0.08);
+  --surface-2: rgba(255, 255, 255, 0.12);
+  --text: #eaf2ff;
+  --muted: #b6c7e6;
+  --primary: #3fb8ff;
+  --primary-2: #79d2ff;
+  --accent: #2ce5b8;
+  --ring: rgba(63, 184, 255, 0.35);
+  --border: rgba(255, 255, 255, 0.18);
+  --shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  --radius: 18px;
+  --radius-sm: 12px;
+}
+
+body.light {
+  --bg: #f3f7ff;
+  --bg-2: #e4eefb;
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-2: rgba(255, 255, 255, 0.94);
+  --text: #0f1c2f;
+  --muted: #496083;
+  --primary: #1f78f0;
+  --primary-2: #5799ff;
+  --accent: #008f69;
+  --ring: rgba(31, 120, 240, 0.22);
+  --border: rgba(15, 28, 47, 0.1);
+  --shadow: 0 12px 32px rgba(10, 24, 47, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  color: var(--text);
+  line-height: 1.7;
+  background:
+  radial-gradient(60rem 30rem at 50% 40%, rgba(56, 189, 248, 0.08), transparent 70%),
+  radial-gradient(40rem 20rem at 10% -10%, rgba(63, 184, 255, 0.22), transparent 60%),
+  radial-gradient(34rem 18rem at 96% 0%, rgba(44, 229, 184, 0.12), transparent 60%),
+  linear-gradient(155deg, var(--bg), var(--bg-2));
+  transition: background 240ms ease, color 240ms ease;
+  overflow-x: hidden;
+  padding-top: 30px;
+}
+
+main {
+  position: relative;
+  z-index: 2;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 12px;
+  line-height: 1.2;
+}
+
+h1,
+h2 {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 2.2vw, 2.2rem);
+}
+
+p {
+  margin: 0 0 14px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+}
+
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
+  z-index: 9999;
+  background: #fff;
+  color: #111;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+/* ===== NEW DROPDOWN NAVIGATION (OPTION 5) ===== */
+nav {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(500px, calc(100% - 40px));
+  padding: 8px 16px;
+  border-radius: 50px;
+  background: rgba(7, 18, 32, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.brand {
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  background: linear-gradient(120deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  white-space: nowrap;
+}
+
+.nav-links {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-links details {
+  position: relative;
+}
+
+.nav-links summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 8px 20px;
+  border-radius: 30px;
+  background: rgba(63, 184, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  color: var(--text);
+}
+
+.nav-links summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav-links summary::after {
+  content: "▼";
+  font-size: 0.7rem;
+  margin-left: 8px;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+.nav-links details[open] summary {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.nav-links details[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.nav-links summary:hover {
+  background: rgba(63, 184, 255, 0.2);
+}
+
+.nav-links details[open] summary:hover {
+  background: var(--primary-2);
+}
+
+.dropdown-content {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  margin-top: 5px;
+  padding: 8px;
+  border-radius: 20px;
+  background: rgba(7, 18, 32, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  animation: dropdownFade 0.2s ease;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-content a {
+  padding: 12px 16px;
+  border-radius: 14px;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdown-content a:hover {
+  background: rgba(63, 184, 255, 0.15);
+  transform: translateX(5px);
+  color: var(--primary);
+}
+
+.dropdown-content a.active {
+  background: rgba(63, 184, 255, 0.2);
+  color: var(--primary);
+  border-left: 3px solid var(--primary);
+}
+
+.toggle {
+  border: none;
+  border-radius: 30px;
+  padding: 8px 16px;
+  color: white;
+  background: linear-gradient(120deg, var(--primary), var(--accent));
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-width: 90px;
+}
+
+.toggle:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 5px 15px rgba(63, 184, 255, 0.3);
+}
+
+/* HERO SECTION */
+.hero{
+  position:relative;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
+  color:white;
+
+  background: linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#1c1c3c);
+  background-size:400% 400%;
+  animation: gradientMove 12s ease infinite;
+}
+
+/* Gradient Animation */
+
+@keyframes gradientMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* HERO TEXT */
+
+.hero-inner{
+  max-width:900px;
+  animation: fadeUp 1.5s ease;
+}
+
+.hero-title{
+  font-size:3.5rem;
+  margin-bottom:20px;
+
+  text-shadow:0 0 15px rgba(255,255,255,0.6);
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+.hero-text{
+  font-size:1.2rem;
+  line-height:1.6;
+  opacity:0.9;
+  margin-bottom:30px;
+}
+
+/* Button */
+
+.hero-btn{
+  padding:14px 30px;
+  background:#ff7b00;
+  color:white;
+  text-decoration:none;
+  border-radius:40px;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+.hero-btn:hover{
+  transform:scale(1.1);
+  background:#ff5500;
+}
+
+/* Glow animation */
+
+@keyframes glow{
+  from{
+    text-shadow:0 0 10px #fff,0 0 20px #00e5ff;
+  }
+  to{
+    text-shadow:0 0 20px #fff,0 0 40px #00e5ff;
+  }
+}
+
+/* Fade animation */
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(40px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* Floating Particles */
+
+.particles{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity:0.2;
+  animation: moveParticles 60s linear infinite;
+}
+
+@keyframes moveParticles{
+  from{
+    transform:translateY(0);
+  }
+  to{
+    transform:translateY(-1000px);
+  }
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 920px;
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 6.2vw, 4.4rem);
+  margin-bottom: 12px;
+  text-shadow: 0 0 22px rgba(63, 184, 255, 0.45);
+  background: linear-gradient(to right, #e0f2fe, #79d2ff, #2ce5b8);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: glowPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  from { text-shadow: 0 0 20px rgba(63,184,255,0.4); }
+  to   { text-shadow: 0 0 35px rgba(44,229,184,0.7); }
+}
+
+.hero p {
+  max-width: 780px;
+  margin: 0 auto 18px;
+  font-size: clamp(1rem, 2vw, 1.24rem);
+color: #d9e9ff;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+section {
+  width: min(1180px, calc(100% - 28px));
+  margin: 0 auto 24px;
+  padding: 36px 22px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+}
+
+.section-subtitle {
+  color: var(--muted);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.card {
+  margin-top: 16px;
+  border-radius: 40px;
+  padding: 26px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: linear-gradient(
+      145deg,
+      rgba(255,255,255,0.12),
+      rgba(255,255,255,0.04)
+  );
+  backdrop-filter: blur(22px);
+  box-shadow: 
+      0 30px 60px rgba(0,0,0,0.45),
+      inset 0 0 25px rgba(255,255,255,0.05);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: -120% 30% auto -30%;
+  height: 220%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.13), transparent);
+  transform: rotate(20deg);
+  transition: transform 650ms ease;
+  pointer-events: none;
+}
+
+.card:hover::before {
+  transform: translateX(26%) rotate(20deg);
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow:
+      0 40px 80px rgba(0,0,0,0.55),
+      0 0 25px rgba(63,184,255,0.3);
+}
+.stats {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(170px, 1fr));
+  gap: 14px;
+}
+
+.stat {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  text-align: center;
+  background: linear-gradient(140deg, rgba(63, 184, 255, 0.18), rgba(44, 229, 184, 0.1));
+  color: var(--primary-2);
+  font-size: clamp(1rem, 2.4vw, 1.2rem);
+  font-weight: 800;
+  box-shadow: 0 0 20px rgba(63,184,255,0.2);
+  animation: statGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes statGlow {
+  from { box-shadow: 0 0 15px rgba(63,184,255,0.2); }
+  to   { box-shadow: 0 0 30px rgba(44,229,184,0.5); }
+}
+
+.timeline {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0 0 0 18px;
+  border-left: 3px solid var(--primary);
+}
+
+.timeline li {
+  position: relative;
+  margin: 0 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  background: var(--surface-2);
+}
+
+.timeline li::before {
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: 16px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 0 5px var(--ring);
+}
+
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  gap: 14px;
+}
+
+.scenario {
+  cursor: pointer;
+  transition: transform 190ms ease, box-shadow 190ms ease, border-color 190ms ease;
+}
+
+.scenario:hover {
+  transform: translateY(-3px);
+  border-color: rgba(63, 184, 255, 0.45);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+}
+
+#result {
+  margin-top: 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  padding: 18px;
+  background: rgba(7, 18, 32, 0.52);
+  transition: border-color 280ms ease, box-shadow 280ms ease, transform 280ms ease;
+}
+
+#result:hover {
+  border-color: rgba(63, 184, 255, 0.45);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+  transform: translateY(-2px);
+}
+
+#result h3 {
+  margin-top: 0;
+}
+
+#result ul {
+  margin: 8px 0 0;
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.impact-grid .card h3 {
+  font-size: 1.1rem;
+}
+
+.map-wrap {
+  position: relative;
+}
+
+.map {
+  width: 100%;
+  max-width: 760px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 220ms ease, filter 220ms ease;
+}
+
+.map:hover {
+  transform: scale(1.01);
+  filter: brightness(1.04);
+}
+
+.conclusion-note {
+  font-weight: 700;
+  color: var(--primary-2);
+}
+
+footer {
+  width: min(1180px, calc(100% - 28px));
+  margin: 0 auto 20px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  text-align: center;
+}
+
+.cursor-glow {
+  position: fixed;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(63, 184, 255, 0.32), transparent 70%);
+  pointer-events: none;
+  z-index: 999;
+  mix-blend-mode: screen;
+}
+
+/* ===== BACK TO TOP BUTTON ===== */
+#back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+#back-to-top:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(63,184,255,0.4);
+}
+
+#back-to-top.visible {
+  display: flex;
+}
+
+/* ================= LOGIN UI ================= */
+
+#login-overlay{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background: 
+    radial-gradient(ellipse at 20% 30%, rgba(63, 184, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(44, 229, 184, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(63, 184, 255, 0.08) 0%, transparent 60%),
+    var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+/* Animated background orbs */
+#login-overlay::before,
+#login-overlay::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  filter:blur(60px);
+  animation:orbFloat 8s ease-in-out infinite;
+}
+
+#login-overlay::before{
+  width:300px;
+  height:300px;
+  background:rgba(63, 184, 255, 0.4);
+  top:-100px;
+  left:-50px;
+}
+
+#login-overlay::after{
+  width:250px;
+  height:250px;
+  background:rgba(44, 229, 184, 0.35);
+  bottom:-80px;
+  right:-30px;
+  animation-delay:-4s;
+}
+
+@keyframes orbFloat{
+  0%,100%{transform:translate(0, 0) scale(1);}
+  33%{transform:translate(30px, -30px) scale(1.05);}
+  66%{transform:translate(-20px, 20px) scale(0.95);}
+}
+
+/* Scanline overlay */
+.login-scanlines{
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events:none;
+  animation:scanMove 10s linear infinite;
+}
+
+@keyframes scanMove{
+  0%{transform:translateY(0);}
+  100%{transform:translateY(4px);}
+}
+
+.login-box{
+  width:380px;
+  padding:45px 40px;
+  text-align:center;
+  border-radius:20px;
+  background:linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.02)
+  );
+  backdrop-filter:blur(25px);
+  -webkit-backdrop-filter:blur(25px);
+  border:1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 0 100px rgba(63, 184, 255, 0.1);
+  animation:float 6s ease-in-out infinite;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Glowing border effect */
+.login-box::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:22px;
+  background:linear-gradient(135deg, var(--primary), var(--accent), var(--primary));
+  background-size:200% 200%;
+  animation:borderGlow 4s ease infinite;
+  z-index:-1;
+  opacity:0.6;
+}
+
+.login-box::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:20px;
+  background:linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+  z-index:-1;
+}
+
+@keyframes borderGlow{
+  0%,100%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-12px);}
+}
+
+/* Corner accents */
+.login-box .corner{
+  position:absolute;
+  width:20px;
+  height:20px;
+  border:2px solid var(--primary);
+  opacity:0.6;
+}
+
+.login-box .corner.tl{
+  top:12px;
+  left:12px;
+  border-right:none;
+  border-bottom:none;
+}
+
+.login-box .corner.tr{
+  top:12px;
+  right:12px;
+  border-left:none;
+  border-bottom:none;
+}
+
+.login-box .corner.bl{
+  bottom:12px;
+  left:12px;
+  border-right:none;
+  border-top:none;
+}
+
+.login-box .corner.br{
+  bottom:12px;
+  right:12px;
+  border-left:none;
+  border-top:none;
+}
+
+/* Logo/Icon area */
+.login-icon{
+  width:70px;
+  height:70px;
+  margin:0 auto 20px;
+  background:linear-gradient(135deg, var(--primary), var(--accent));
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:
+    0 0 30px rgba(63, 184, 255, 0.4),
+    0 0 60px rgba(44, 229, 184, 0.2);
+  animation:pulse 2s ease-in-out infinite;
+}
+
+.login-icon svg{
+  width:32px;
+  height:32px;
+  fill:white;
+}
+
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 30px rgba(63, 184, 255, 0.4), 0 0 60px rgba(44, 229, 184, 0.2);}
+  50%{box-shadow:0 0 40px rgba(63, 184, 255, 0.6), 0 0 80px rgba(44, 229, 184, 0.3);}
+}
+
+.login-title{
+  font-family:"Playfair Display", Georgia, serif;
+  font-size:1.6rem;
+  margin-bottom:6px;
+  background:linear-gradient(135deg, #e0f2fe, var(--primary-2), var(--accent));
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+  text-shadow:0 0 30px rgba(63, 184, 255, 0.3);
+}
+
+.login-sub{
+  color:var(--muted);
+  font-size:0.85rem;
+  margin-bottom:28px;
+  letter-spacing:0.5px;
+}
+
+/* Input wrapper with icons */
+.input-wrapper{
+  position:relative;
+  margin-bottom:18px;
+}
+
+.input-wrapper svg{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  width:18px;
+  height:18px;
+  fill:var(--muted);
+  transition:0.3s;
+}
+
+.input-wrapper input{
+  width:100%;
+  padding:14px 14px 14px 45px;
+  border-radius:12px;
+  border:1px solid rgba(255, 255, 255, 0.12);
+  background:rgba(0, 0, 0, 0.3);
+  color:var(--text);
+  outline:none;
+  transition:0.3s;
+  font-size:0.95rem;
+}
+
+.input-wrapper input::placeholder{
+  color:rgba(255, 255, 255, 0.3);
+}
+
+.input-wrapper input:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 20px rgba(63, 184, 255, 0.25), 0 0 0 3px rgba(63, 184, 255, 0.1);
+}
+
+.input-wrapper input:focus + svg,
+.input-wrapper:focus-within svg{
+  fill:var(--primary);
+}
+
+/* PREMIUM BUTTON */
+.primary-btn{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:12px;
+  font-weight:800;
+  font-size:0.95rem;
+  letter-spacing:1.5px;
+  color:white;
+  cursor:pointer;
+  background:linear-gradient(120deg, var(--primary), #2da8d8, var(--accent));
+  background-size:200% 200%;
+  transition:0.4s;
+  position:relative;
+  overflow:hidden;
+  margin-top:8px;
+}
+
+.primary-btn::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition:0.5s;
+}
+
+.primary-btn:hover{
+  transform:scale(1.02);
+  box-shadow:
+    0 8px 25px rgba(63, 184, 255, 0.4),
+    0 0 40px rgba(44, 229, 184, 0.2);
+  background-position:100% 0;
+}
+
+.primary-btn:hover::before{
+  left:100%;
+}
+
+.primary-btn:active{
+  transform:scale(0.98);
+}
+
+/* Error state */
+#login-error{
+  color:#ff6b6b;
+  font-size:0.85rem;
+  margin-top:18px;
+  display:none;
+  padding:10px;
+  border-radius:8px;
+  background:rgba(255, 107, 107, 0.1);
+  border:1px solid rgba(255, 107, 107, 0.2);
+  animation:shake 0.5s ease;
+}
+
+@keyframes shake{
+  0%,100%{transform:translateX(0);}
+  20%{transform:translateX(-8px);}
+  40%{transform:translateX(8px);}
+  60%{transform:translateX(-4px);}
+  80%{transform:translateX(4px);}
+}
+
+/* Hint text */
+.login-hint{
+  margin-top:20px;
+  font-size:0.75rem;
+  color:rgba(255, 255, 255, 0.35);
+}
+
+.login-hint span{
+  color:var(--primary-2);
+}
+
+@media (max-width: 940px) {
+  body {
+    padding-top: 80px;
+  }
+  
+  nav {
+    width: min(450px, calc(100% - 30px));
+  }
+  
+  .brand {
+    font-size: 0.9rem;
+  }
+  
+  .toggle {
+    min-width: 70px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: 78vh;
+    padding-top: 108px;
+  }
+  
+  nav {
+    width: calc(100% - 20px);
+    padding: 6px 12px;
+  }
+  
+  .brand {
+    font-size: 0.8rem;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .nav-links summary {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .dropdown-content {
+    right: -10px;
+    min-width: 160px;
+  }
+  
+  .cursor-glow {
+    display: none;
+  }
+
+  section {
+    padding: 28px 16px;
+  }
+  
+  section {
+  position: relative;
+}
+
+section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 1px;
+  background: linear-gradient(120deg, var(--primary), var(--accent), transparent);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.4;
+}
+}
+/* Page Load Animation */
+body {
+  animation: pageLoad 1.2s ease;
+}
+
+@keyframes pageLoad {
+  from { 
+    opacity: 0; 
+    transform: scale(1.01); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+</style>
+</head>
+<body>
+<div id="loader">
+  <div class="loader-content">
+    <h1>Alternate History Simulator</h1>
+    <div class="loader-bar"></div>
+  </div>
+</div>
+<div id="login-overlay">
+  <div class="login-scanlines"></div>
+  <div class="login-box">
+    <!-- Corner accents -->
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+    
+    <!-- Icon -->
+    <div class="login-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+      </svg>
+    </div>
+    
+    <h2 class="login-title">Simulator Access</h2>
+    <p class="login-sub">Enter credentials to initialize</p>
+
+    <div class="input-wrapper">
+      <input type="text" id="username" placeholder="Username">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+      </svg>
+    </div>
+
+    <div class="input-wrapper">
+      <input type="password" id="password" placeholder="Password">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+      </svg>
+    </div>
+
+    <button class="primary-btn" onclick="validateLogin()">
+      START SIMULATION
+    </button>
+
+    <p id="login-error">Access Denied. Try again.</p>
+    
+    <p class="login-hint">Demo: <span>IINTM</span> / <span>Surya</span></p>
+  </div>
+</div>
+  <div id="bg3d"></div>
+<a href="#home" class="skip-link">Skip to content</a>
+<div class="cursor-glow" id="glow"></div>
+
+<nav>
+  <div class="brand">Alternate History Simulator</div>
+  <div class="nav-links">
+    <details>
+      <summary>Menu</summary>
+      <div class="dropdown-content">
+        <a href="#home">Home</a>
+        <a href="#history">History</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#scenario">Scenario</a>
+        <a href="#impacts">Impacts</a>
+        <a href="#map">Map</a>
+        <a href="#conclusion">Conclusion</a>
+      </div>
+    </details>
+    <button type="button" class="toggle" onclick="toggleMode()">Dark/Light</button>
+  </div>
+</nav>
+
+<!-- BACK TO TOP BUTTON -->
+<button id="back-to-top" title="Back to Top">↑</button>
+
+<main>
+  <section class="hero" id="home">
+  <div class="particles"></div>
+
+  <div class="hero-inner">
+    <h1 class="hero-title">What If India Never Partitioned?</h1>
+    <p class="hero-text">
+      Explore a structured alternate-history simulation of politics, economy,
+      society, and strategic influence in an undivided South Asian federation.
+    </p>
+
+    <a href="#scenario" class="hero-btn">Start Simulation</a>
+  </div>
+</section>
+
+  <section id="history" class="reveal">
+    <h2>History Module</h2>
+    <p class="section-subtitle">Context behind the 1947 partition and the counterfactual baseline for this simulation.</p>
+
+    <div class="card">
+      <p>The partition of India in 1947 followed decades of colonial pressure, communal tensions, and political disagreements among major leadership blocs. In this project, we model an alternative where partition is avoided through a power-sharing federal settlement.</p>
+      <p>Under this scenario, regions such as Punjab, Bengal, Sindh, and the princely states are integrated into a single constitutional framework. The central question is not whether conflict disappears, but whether conflict is managed institutionally rather than through territorial division.</p>
+      <p>This allows us to examine possible long-term effects on state capacity, development spending, social cohesion, and geopolitical leverage while also acknowledging ongoing internal risks from linguistic, regional, and class tensions.</p>
+<p>In this alternate timeline where India never partitioned in 1947, the subcontinent emerged as one vast, federal Dominion of India — a single sovereign nation stretching unbroken from the Khyber Pass to the Burmese frontier and from the Himalayas to the Indian Ocean, home to nearly 400 million people on Independence Day and over 1.8 billion today. 
+  The Constituent Assembly, guided by Nehru, Patel, and Jinnah (who accepted the role of permanent Vice-President with special safeguards for Muslim-majority provinces), framed a robust federal constitution that granted sweeping autonomy to Punjab, Sindh, NWFP, and East Bengal while preserving a strong but balanced centre in Delhi. No Radcliffe Line was ever drawn; 
+  instead, joint Congress–Muslim League peace committees swiftly contained the 1947 riots, princely states integrated peacefully through negotiation, and the undivided military and civil services maintained order without the trauma of mass migration or communal genocide. From 1947 to 1960, a unified Five-Year Plan fused the Indus and Ganges basins into the world’s largest contiguous irrigated zone, 
+  launched the Green Revolution a decade early, and poured resources saved from future wars into heavy industry and nationwide literacy drives. The 1960s saw this stronger India repel China’s Himalayan incursions more decisively, avoid the 1965 war entirely, and reorganise linguistic provinces on a grand federal scale while a single national cricket team and merged film industry forged a shared cultural identity. 
+  In the 1970s–1980s, East Bengal’s autonomy demands were resolved through constitutional restructuring rather than secession, the oil shocks were cushioned by diversified internal resources, and nuclear and space programmes advanced faster without a rival arms race; Indira-era reforms focused on nationwide land redistribution across a seamless market. By 1990 onward, liberalisation detonated across the entire subcontinent, 
+  creating an integrated economy with seamless supply chains from Karachi ports to Kolkata factories, a unified tech corridor from Lahore to Bangalore, and foreign investment flooding into the planet’s largest single consumer market. Today this undivided India stands as a vibrant, fractious superpower — richer, more secure, and more influential than our divided reality — with a permanent UN Security Council seat, unmatched soft 
+  power through cricket and cinema, and decisive sway over Afghanistan and the Indian Ocean, yet forever managing its immense diversity through sophisticated federal balancing acts. The scars of 1947 were avoided; the promise of 1947 was fulfilled.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat" id="stat1">0</div>
+      <div class="stat" id="stat2">0</div>
+      <div class="stat" id="stat3">0</div>
+    </div>
+  </section>
+
+  <section id="timeline" class="reveal">
+    <h2>Timeline Module</h2>
+    <p class="section-subtitle">A simplified alternate trajectory from independence to globalization.</p>
+    <ul class="timeline">
+      <li><strong>1947:</strong> Independence without partition. Princely states and provinces integrate under a federal constitutional settlement.In 1947, independence would have been declared for a single, undivided Dominion of India stretching from the Hindu Kush to Burma’s border, with a carefully negotiated federal constitution already signed by Nehru, Patel, Jinnah (who would likely have accepted the role of powerful Vice-President or Leader of the Opposition with special safeguards for Muslim-majority provinces), and the British. No Radcliffe Line would exist, no overnight border chaos, and no mass refugee trains. The horrific communal massacres that killed up to a million people in our timeline would be replaced by coordinated Congress–Muslim League peace committees and joint police-military action that quickly contained riots in Punjab and Bengal. Princely states like Kashmir, Hyderabad, Junagadh, and the western frontier would integrate peacefully through diplomacy and incentives rather than military force. The initial euphoria of freedom would be real, but immediately tested by the need to form a grand coalition government in Delhi to manage the transition, setting a precedent for multi-community rule that would define the new nation’s politics for decades.</li>
+      <li><strong>1947-1960:</strong> National planning scales faster due to unified rail, river, and port systems with fewer trade disruptions.From 1947 to 1960, all the energy and resources wasted in our history on three Indo-Pak wars would instead pour into nation-building on a colossal scale. A single unified Five-Year Plan would integrate the Indus basin’s irrigation networks, Punjab’s cotton fields, East Bengal’s jute economy, and the Deccan’s minerals into one seamless internal market. The Green Revolution would arrive a decade earlier through cooperative farming across undivided provinces, dramatically boosting food production. The Constitution would grant substantial autonomy to Muslim-majority regions (Punjab, Sindh, NWFP, East Bengal) with special provincial rights and gradual phasing out of separate electorates, preventing the fear of Hindu domination. A larger, undivided military (including intact Muslim regiments) would maintain internal peace, while Nehru’s central planning would drive heavy industry and literacy campaigns. Kashmir would remain calm as an integrated state, and sporadic communal tensions would be handled by federal forces rather than escalating into war. Overall, per-capita growth would be noticeably higher than the real-world 1950s stagnation, laying a far stronger foundation for the young republic.</li>
+      <li><strong>1960s:</strong> Lower interstate military pressure allows heavier investment in irrigation, education, and industrial capacity.In the 1960s, this united India—economically and militarily far stronger—would decisively repel China’s 1962 Himalayan incursions with fully integrated western and eastern frontier forces, avoiding the humiliating defeat of our timeline. There would be no 1965 war because no separate Pakistan would exist to launch it. Linguistic state reorganizations would occur on a grander scale, creating powerful Bengali and Punjabi sub-states with significant veto powers while still keeping the centre strong. Industrialisation would accelerate rapidly, making India Asia’s second-fastest growing major economy after Japan. Culturally, a single national cricket team would dominate world cricket earlier, and Bollywood would seamlessly incorporate talent from Lahore, Karachi, and Dhaka, creating a unified golden age of Indian cinema. Foreign policy would be more assertive and confidently non-aligned, with greater leverage in the Cold War and no early nuclear arms race draining resources.</li>
+      <li><strong>1970-1980:</strong> Integrated coastline and inland logistics support accelerated manufacturing and wider internal market expansion.During the 1970s and 1980s, the absence of the 1971 Bangladesh Liberation War and its massive refugee crisis would save millions of lives and billions in costs. East Bengal’s autonomy demands would still create political tension, but these would likely be resolved through prolonged negotiations and a managed federal restructuring rather than full secession. Indira Gandhi’s (or a successor’s) Emergency-era reforms would focus on nationwide land redistribution and poverty alleviation across a vast single market. The 1970s oil shocks would hurt less due to diversified internal resources. Nuclear and space programmes would advance faster without a rival neighbour’s proliferation fears. Soviet relations would remain close but with more bargaining power. However, Hindu–Muslim political friction would persist, leading to frequent coalition governments in Delhi, occasional localised violence, and stronger provincial identities in Punjab, Sindh, and Bengal. Majoritarianism and extreme Islamisation (as seen in real-world Pakistan) would be avoided, replaced instead by constant federal balancing acts.</li>
+      <li><strong>1990 onward:</strong> Liberalization across one large market boosts global competitiveness, services growth, and soft-power reach.From 1990 onwards, economic liberalisation would explode earlier and far more powerfully under a Rajiv Gandhi-like reformer or an even earlier leader, unleashing a single, unified economy that could reach 3–4 trillion dollars (PPP) by the 2010s—potentially rivaling or surpassing China. Seamless supply chains would run from Karachi ports to Kolkata factories, a unified tech boom would connect Bangalore, Hyderabad, and Lahore, and foreign investment would flood into the world’s largest single consumer market. With no nuclear arms race or border militarisation, massive resources would flow into infrastructure, education, and healthcare instead. India would likely secure a permanent UN Security Council seat by the early 2000s. Global soft power would be unmatched—through a dominant pan-subcontinental cricket league, a shared cinematic universe, and decisive influence in Afghanistan (no Taliban-Pakistan nexus as we know it). Yet internal challenges would remain: Hindu nationalist surges would be met by Muslim provincial pushback, occasionally leading to Canadian-style referendums in Punjab or Bengal; low-level insurgencies in the northeast or Baloch areas would still flare up; and coalition governments in Delhi would often slow decisive reforms. The result would be a vibrant, fractious, incredibly rich superpower—far more influential globally, far less militarised on its western borders, and forever walking the tightrope of religious and regional pluralism that partition was meant to solve but only postponed.</li>
+    </ul>
+  </section>
+  <section class="dashboard reveal">
+
+<h2>Simulation Overview</h2>
+<p class="section-subtitle">Key structural indicators of a unified South Asian federation.</p>
+
+<div class="dashboard-grid">
+
+<div class="dash-card">
+<h3>Population Scale</h3>
+<p>~1.8 Billion citizens in a single federal system.</p>
+</div>
+
+<div class="dash-card">
+<h3>Strategic Geography</h3>
+<p>Unified control from the Arabian Sea to the Bay of Bengal.</p>
+</div>
+
+<div class="dash-card">
+<h3>Economic Integration</h3>
+<p>Karachi–Delhi–Kolkata corridor powering continental trade.</p>
+</div>
+
+<div class="dash-card">
+<h3>Global Influence</h3>
+<p>Projected permanent seat in global governance institutions.</p>
+</div>
+
+</div>
+
+</section>
+
+  <section id="scenario" class="reveal">
+    <h2>Scenario Simulation Module</h2>
+    <p class="section-subtitle">Click any scenario to view outcomes and potential trade-offs.</p>
+
+    <div class="scenario-grid">
+      <div class="card scenario" onclick="showOutcome('political')">
+        <h3>Political Unity</h3>
+        <p>A broader federal compact may reduce border conflict while increasing the need for strong coalition governance and 
+          constitutional safeguards.In a world without Partition, a single India would have adopted a far broader and more 
+          resilient federal compact from 1947 itself, with the Constituent Assembly enshrining sweeping autonomy for 
+          Muslim-majority provinces (Punjab, Sindh, NWFP, East Bengal) while keeping a strong but non-dominating centre in Delhi. 
+          Jinnah would likely have served as the first Vice-President or Leader of the Opposition with veto rights on cultural 
+          and religious matters, turning potential rivalry into permanent coalition governance. No Radcliffe Line would ever be 
+          drawn, eliminating the very concept of an Indo-Pak border and with it four wars, three nuclear crises, and endless 
+          military standoffs. Kashmir would remain a peaceful integrated state rather than a perpetual flashpoint. 
+          Princely states would merge smoothly under one negotiated framework instead of military operations. 
+          The result would be a continuously evolving federal democracy where regional identities (Punjabi, Bengali, Sindhi, Pashtun) 
+          are celebrated through powerful provincial assemblies, yet national unity is preserved by a larger, undivided military and 
+          joint civil services. Hindu-Muslim political competition would still exist but would play out inside Parliament rather than 
+          across battlefields, producing more stable coalition governments, fewer emergencies, and a political culture closer to Canada 
+          or the European Union than the adversarial India-Pakistan reality we know.</p>
+      </div>
+
+      <div class="card scenario" onclick="showOutcome('economic')">
+        <h3>Economic Growth</h3>
+        <p>Combined resource corridors, ports, and labor markets could increase scale, productivity, and trade continuity over decades.
+          Without Partition, India would have inherited the entire subcontinent’s resource base as one seamless economy, creating the 
+          world’s largest single market from the very first day of independence. Karachi’s world-class port would serve as the western 
+          gateway, seamlessly linked by unbroken rail and road corridors to Mumbai, Kolkata, and Chittagong, while the combined 
+          Indus-Ganges-Brahmaputra river systems would feed the biggest contiguous irrigated farmland on Earth. Punjab’s cotton, East 
+          Bengal’s jute, Sindh’s natural gas, Odisha’s minerals, and Maharashtra’s industries would feed into unified supply chains 
+          without any customs barriers, tariffs, or hostile borders. The Green Revolution would have spread across undivided provinces 
+          a decade earlier, and the 1991 liberalisation would have detonated on a vastly larger scale—turning the subcontinent into an 
+          economic superpower potentially matching or surpassing China by the 2010s. A single massive labour pool of 1.7–2 billion 
+          people, shared technical talent from Lahore to Bangalore, and one set of regulations would have attracted trillions in foreign 
+          investment. Today this united India would boast seamless industrial corridors from the Arabian Sea to the Bay of Bengal, a unified 
+          energy grid, and an economy that is richer, more diversified, and far less vulnerable to external shocks than our divided present.</p>
+      </div>
+
+      <div class="card scenario" onclick="showOutcome('cultural')">
+        <h3>Social Harmony</h3>
+        <p>Avoiding mass displacement may deepen intercommunity exchange, though identity management remains essential in a large federation.
+          Avoiding the mass displacement of 15–18 million people and the slaughter of up to a million in 1947 would have fundamentally altered 
+          the social fabric of the subcontinent. Families would never have been torn apart; millions of Hindus, Muslims, and Sikhs would have 
+          remained in the towns and villages where their ancestors lived for centuries. Shared schools, colleges, festivals, and marriages would 
+          have continued uninterrupted, gradually eroding the sharp religious polarisation that Partition hardened into national identities. 
+          A single national narrative would celebrate the freedom struggle as a joint Hindu-Muslim-Sikh triumph rather than two competing origin stories. 
+          Linguistic and provincial identities (Bengali, Punjabi, Sindhi) would flourish within a federal framework instead of being weaponised against each 
+          other across borders. Communal riots would still occur but would be contained locally by joint police and community leaders rather than escalating into national 
+          trauma or state-sponsored propaganda. Over decades, a deeper inter-community trust would have developed—visible today in mixed neighbourhoods across Karachi to Kolkata, 
+          shared cinematic and sporting cultures, and a generation that identifies first as “Indian” and only second by faith. While religious and regional tensions would persist, 
+          they would be managed through democratic negotiation rather than militarised hatred, producing a more pluralistic, culturally vibrant, and socially cohesive society than the scarred and suspicious 
+          nations that emerged from 1947.</p>
+      </div>
+    </div>
+
+    <div id="result" class="terminal">
+<span class="terminal-title">Simulation Output</span>
+<div class="terminal-content">
+Click a scenario card to explore...
+</div>
+</div>
+  </section>
+
+  <section id="impacts" class="reveal">
+    <h2>Impacts Module</h2>
+    <p class="section-subtitle">Three impact domains are evaluated side by side.</p>
+
+    <div class="impact-grid">
+      <div class="card">
+        <h3>Political Impact</h3>
+        <p>A unified state could develop stronger federal institutions, improved strategic depth, and more continuity in long-term public policy, if power-sharing remains credible.In a unified India that never experienced Partition, a single sovereign state would have developed far stronger and more mature federal institutions from the very outset of independence in 1947. With the entire subcontinent under one Constitution, the Constituent Assembly would have crafted deeper power-sharing mechanisms—giving Muslim-majority provinces (Punjab, Sindh, NWFP, East Bengal) robust autonomy, veto rights on cultural-religious issues, and guaranteed representation in the central cabinet—turning potential separatism into permanent coalition politics. Jinnah or a similar Muslim League leader would likely have held high office continuously, ensuring policy continuity across decades rather than the sharp breaks caused by rivalry between two hostile nations. Strategically, the unified country would enjoy unmatched geographic depth: a single military controlling the entire Himalayan frontier, the Indus and Ganges plains, and the eastern seaboard, allowing decisive responses to external threats like the 1962 Chinese incursion without divided resources or intelligence failures. Long-term policy continuity would replace the stop-start cycles of India-Pakistan hostility; five-year plans, nuclear doctrine, and foreign policy would evolve with institutional memory instead of being reset by wars and regime changes, producing a more stable democracy with fewer emergencies, stronger civil services, and a political culture where national interest consistently overrides communal or provincial populism.</p>
+      </div>
+
+      <div class="card">
+        <h3>Economic Impact</h3>
+        <p>A single market with integrated agricultural belts, ports, and energy routes may improve capital formation and reduce duplication in defense-led spending.A single, undivided Indian market from 1947 would have created the largest integrated economy on Earth, fusing agricultural belts, ports, and energy routes into one seamless system that dramatically improves capital formation and slashes duplication. The fertile Indus basin in the west, the Ganges heartland, and the Brahmaputra delta in the east would operate as a single food bowl without any trade barriers, allowing the Green Revolution to spread nationwide a decade earlier and generating massive agricultural surpluses for reinvestment. Karachi, Mumbai, Kolkata, and Chittagong ports would function as complementary hubs under one customs regime, enabling efficient export corridors from cotton fields in Punjab to jute mills in Bengal and mineral mines in central India. Energy pipelines and power grids would criss-cross the subcontinent without rivalrous competition, pooling natural gas from Sindh, coal from Bihar, and hydroelectricity from the Himalayas into a unified national grid that lowers costs and attracts trillions in foreign direct investment. Duplication of defence spending, separate currencies, and duplicated infrastructure would vanish, freeing hundreds of billions of dollars over decades for roads, railways, and education. By the 2010s this unified economy would likely be 40–60 % larger than the combined GDP of today’s India, Pakistan, and Bangladesh, with higher per-capita incomes, a deeper industrial base, and the scale to rival China as the workshop of the world.</p>
+      </div>
+
+      <div class="card">
+        <h3>Social Impact</h3>
+        <p>Lower forced migration could preserve social networks and cultural hybridity, but governance would still need to manage diverse linguistic and regional demands.By preventing the forced migration of 15–18 million people and the communal bloodbath of 1947, a united India would have preserved centuries-old social networks and cultural hybridity that Partition shattered forever. Hindu, Muslim, and Sikh families would have continued living side-by-side in Lahore, Amritsar, Dhaka, and Kolkata, maintaining shared neighbourhoods, inter-faith marriages, joint businesses, and syncretic traditions such as Sufi-Bhakti festivals and composite folk cultures. Schools and colleges would have remained mixed, producing generations fluent in each other’s languages, cuisines, and customs, while a single national media and film industry would reinforce a shared “Indian” identity rather than competing nationalist narratives. Lower forced migration would mean intact kinship systems, preserved ancestral lands, and far less generational trauma, leading to stronger community trust and reduced polarisation. However, governance would still face the complex task of managing deep religious and linguistic diversity: federal and provincial laws would need constant calibration to balance majority and minority rights, prevent localised riots, and accommodate provincial identities through affirmative action, cultural commissions, and power-sharing formulas. The result would be a more organically pluralistic society—richer in hybrid art, music, literature, and everyday coexistence—yet one that requires vigilant, sophisticated federal management to ensure harmony does not slide into majoritarian dominance or regional fragmentation.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="map" class="reveal">
+    <h2>Map Module</h2>
+    <p class="section-subtitle">Visual concept of a unified subcontinental federation.</p>
+    <div class="card map-wrap">
+      <img src="india-map.jpg" alt="Concept map of a unified South Asian federation" class="map" onclick="alert('Unified South Asian Federation Zone')">
+    </div>
+  </section>
+  <section class="reveal">
+
+    <section id="conclusion" class="reveal">
+    <h2>Conclusion Module</h2>
+    <div class="card">
+      <p>This alternate-history model suggests that an undivided India may have achieved earlier scale advantages in governance, trade, and strategic influence, while still facing serious internal coordination challenges.**Conclusion**  
+This alternate-history model reveals that an undivided India, forged in 1947 as a single sovereign federation spanning the entire subcontinent, would have emerged not merely as a larger version of today’s nations but as a fundamentally transformed civilisation-state — one that avoided the catastrophic human and economic costs of Partition while harnessing the full synergy of its shared geography, resources, cultures, and people. Politically, the grand coalition of 1947 would have evolved into a robust, Canadian-style federalism where powerful provincial assemblies in Lahore, Dhaka, Karachi, and Chennai balanced a strong but non-hegemonic centre, producing decades of policy continuity, deeper democratic institutions, and strategic depth that turned potential rivals into permanent partners inside one Parliament rather than enemies across barbed wire. Economically, the seamless fusion of the Indus-to-Ganges agricultural heartland, the unified port network from Karachi to Chittagong, and a single 2-billion-person market would have accelerated industrialisation, triggered an earlier and more explosive liberalisation, and propelled the subcontinent past China to become the world’s largest economy by the 2030s, with trillions redirected from duplicated militaries and borders into world-class infrastructure, education, and innovation. Socially, the preservation of ancient mixed communities, unbroken family ties across Punjab and Bengal, and a shared national narrative would have nurtured a richer, more organic pluralism — where Sufi shrines and temple festivals continued side-by-side, cinema and cricket bound the region in one cultural universe, and generational trauma was replaced by everyday coexistence — even as wise federal governance managed inevitable religious and linguistic tensions through dialogue rather than division. In the end, the final takeaway is crystal clear: unity could have delivered a superpower that is not only vastly wealthier, more secure, and more influential on the global stage, but also more authentically reflective of the subcontinent’s ancient civilisational genius — a living proof that the greatest strength of this land has always lain in its ability to hold diversity within one embrace, rather than fracturing it into separate destinies. The scars of 1947 were not inevitable; they were a choice — and in this timeline, choosing unity would have written a far brighter chapter for one-sixth of humanity.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+function validateLogin() {
+  const user = document.getElementById('username').value;
+  const pass = document.getElementById('password').value;
+  const error = document.getElementById('login-error');
+
+  // Credentials: IINTM / Surya
+  if (user === 'IINTM' && pass === 'Surya') {
+    document.getElementById('login-overlay').style.display = 'none';
+    // If your main content is hidden by default, reveal it here:
+    // document.getElementById('main-content').style.display = 'block'; 
+  } else {
+    error.style.display = 'block';
+  }
+}
+function toggleMode() {
+  document.body.classList.toggle("light");
+}
+
+const loginInputs = document.querySelectorAll("#username, #password");
+loginInputs.forEach((input) => {
+  input.addEventListener("input", () => {
+    document.getElementById("login-error").style.display = "none";
+  });
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      validateLogin();
+    }
+  });
+});
+
+const revealSections = document.querySelectorAll(".reveal");
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("active");
+    }
+  });
+}, { threshold: 0.15 });
+
+revealSections.forEach((section) => revealObserver.observe(section));
+
+const navLinks = document.querySelectorAll(".dropdown-content a");
+const sectionMap = Array.from(navLinks).map((link) => {
+  const id = link.getAttribute("href");
+  return { link, section: document.querySelector(id) };
+});
+
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    sectionMap.forEach(({ link, section }) => {
+      if (section === entry.target) {
+        link.classList.add("active");
+      } else {
+        link.classList.remove("active");
+      }
+    });
+  });
+}, { threshold: 0.55 });
+
+sectionMap.forEach(({ section }) => {
+  if (section) navObserver.observe(section);
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  const details = document.querySelector('details');
+  if (!details.contains(e.target)) {
+    details.removeAttribute('open');
+  }
+});
+
+// Back to top functionality
+const backToTop = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 500) {
+    backToTop.classList.add('visible');
+  } else {
+    backToTop.classList.remove('visible');
+  }
+});
+
+backToTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+function showOutcome(type) {
+  const result = document.getElementById("result");
+
+  if (type === "political") {
+    result.innerHTML = `
+      <h3>Political Unity</h3>
+      <p>A unified constitutional framework could reduce interstate rivalry and improve policy continuity, but only if representation remains balanced across regions and communities.</p>
+      <ul>
+        <li>Higher centre-state policy coordination</li>
+        <li>Potentially lower border militarization</li>
+        <li>Greater diplomatic leverage in South Asia</li>
+        <li>Need for strong federal conflict-resolution systems</li>
+      </ul>
+    `;
+  } else if (type === "economic") {
+    result.innerHTML = `
+      <h3>Economic Growth</h3>
+      <p>A large uninterrupted market with integrated ports and supply chains could accelerate industrialization, trade efficiency, and long-run productivity.</p>
+      <ul>
+        <li>Unified transport and logistics corridors</li>
+        <li>Stronger agricultural-to-industry linkages</li>
+        <li>Higher market depth for investment</li>
+        <li>Earlier emergence as a regional growth engine</li>
+      </ul>
+    `;
+  } else if (type === "cultural") {
+    result.innerHTML = `
+      <h3>Social and Cultural Integration</h3>
+      <p>Without partition-level displacement, social trust and cultural exchange may have deepened, though identity balancing would remain central to stability.</p>
+      <ul>
+        <li>Lower communal fragmentation pressure</li>
+        <li>Richer cross-regional cultural networks</li>
+        <li>Broader linguistic coexistence</li>
+        <li>Continued need for inclusive civil institutions</li>
+      </ul>
+    `;
+  }
+}
+
+let s1 = 0;
+let s2 = 0;
+let s3 = 0;
+
+const statsTimer = setInterval(() => {
+  if (s1 < 90) {
+    s1++;
+    document.getElementById("stat1").innerText = s1 + "% Stability";
+  }
+  if (s2 < 150) {
+    s2++;
+    document.getElementById("stat2").innerText = s2 + "M Trade Index";
+  }
+  if (s3 < 75) {
+    s3++;
+    document.getElementById("stat3").innerText = s3 + "% Cultural Unity";
+  }
+  if (s1 >= 90 && s2 >= 150 && s3 >= 75) {
+    clearInterval(statsTimer);
+  }
+}, 30);
+
+const glow = document.getElementById("glow");
+window.addEventListener("mousemove", (event) => {
+  glow.style.left = event.clientX + "px";
+  glow.style.top = event.clientY + "px";
+});
+// ===== 3D PARTICLE SPHERE BACKGROUND =====
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.getElementById("bg3d").appendChild(renderer.domElement);
+
+const geometry = new THREE.SphereGeometry(5, 64, 64);
+const material = new THREE.PointsMaterial({
+  color: 0x3fb8ff,
+  size: 0.05
+});
+
+const particles = new THREE.Points(geometry, material);
+scene.add(particles);
+
+camera.position.z = 10;
+
+function animate() {
+  requestAnimationFrame(animate);
+  particles.rotation.y += 0.0015;
+  particles.rotation.x += 0.0007;
+  renderer.render(scene, camera);
+}
+
+animate();
+
+window.addEventListener("resize", () => {
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+});
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("loader").style.display = "none";
+  }, 3500);
+});
+</script>
+</body>
+</html>
